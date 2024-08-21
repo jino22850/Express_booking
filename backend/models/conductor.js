@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const passwordComplexity = require("joi-password-complexity");
-const { type } = require('@testing-library/user-event/dist/type');
+//const { type } = require('@testing-library/user-event/dist/type');
 
 const conductorSchema = new mongoose.Schema({
     conductorname: {
@@ -41,4 +41,4 @@ const conductorSchema = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model('conductor', conductorSchema);
+module.exports = mongoose.model('Conductor', conductorSchema);

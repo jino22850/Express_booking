@@ -1,6 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { MdModeEdit  } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+import { FaUserFriends } from "react-icons/fa";
 
 const Conductor = ({ onAdd }) => {
     const [conductors, setConductors] = useState([]);
@@ -117,7 +120,12 @@ const Conductor = ({ onAdd }) => {
         <div className="pt-8 px-4 sm:px-6 lg:px-8 bg-[#F8F9FC] min-h-screen flex flex-col">
             <div className="flex-grow">
                 <div className="bg-white mx-auto px-8 py-6 rounded-lg shadow-md w-full max-w-6xl mt-10">
-                    <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Conductor Details</h2>
+                <div className="flex items-center space-x-4 mb-6">
+        <FaUserFriends className="text-4xl text-blue-900" />
+        <h2 className="text-3xl font-semibold text-blue-900">Conductors</h2>
+      </div>
+                    <div className="border-b-8 border-blue-900 mb-6"></div>
+                    <br/><br/>
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div className="col-span-1">
@@ -127,7 +135,7 @@ const Conductor = ({ onAdd }) => {
                                 <input
                                     type="text"
                                     name="conductorname"
-                                    className="border rounded-md px-4 py-2 w-full border-gray-300"
+                                    className="border rounded-md px-4 py-2 w-full border-gray-300 text-sm"
                                     value={newConductor.conductorname}
                                     onChange={handleInputChange}
                                     placeholder="Conductor Name"
@@ -141,7 +149,7 @@ const Conductor = ({ onAdd }) => {
                                 <input
                                     type="email"
                                     name="email"
-                                    className="border rounded-md px-4 py-2 w-full border-gray-300"
+                                    className="border rounded-md px-4 py-2 w-full border-gray-300 text-sm"
                                     value={newConductor.email}
                                     onChange={handleInputChange}
                                     placeholder="Email"
@@ -155,7 +163,7 @@ const Conductor = ({ onAdd }) => {
                                 <input
                                     type="password"
                                     name="password"
-                                    className="border rounded-md px-4 py-2 w-full border-gray-300"
+                                    className="border rounded-md px-4 py-2 w-full border-gray-300 text-sm"
                                     value={newConductor.password}
                                     onChange={handleInputChange}
                                     placeholder="Password"
@@ -169,7 +177,7 @@ const Conductor = ({ onAdd }) => {
                                 <input
                                     type="text"
                                     name="address"
-                                    className="border rounded-md px-4 py-2 w-full border-gray-300"
+                                    className="border rounded-md px-4 py-2 w-full border-gray-300 text-sm"
                                     value={newConductor.address}
                                     onChange={handleInputChange}
                                     placeholder="Address"
@@ -183,7 +191,7 @@ const Conductor = ({ onAdd }) => {
                                 <input
                                     type="text"
                                     name="gender"
-                                    className="border rounded-md px-4 py-2 w-full border-gray-300"
+                                    className="border rounded-md px-4 py-2 w-full border-gray-300 text-sm"
                                     value={newConductor.gender}
                                     onChange={handleInputChange}
                                     placeholder="Gender"
@@ -197,7 +205,7 @@ const Conductor = ({ onAdd }) => {
                                 <input
                                     type="text"
                                     name="mobileNumber"
-                                    className="border rounded-md px-4 py-2 w-full border-gray-300"
+                                    className="border rounded-md px-4 py-2 w-full border-gray-300 text-sm"
                                     value={newConductor.mobileNumber}
                                     onChange={handleInputChange}
                                     placeholder="Mobile Number"
@@ -212,61 +220,68 @@ const Conductor = ({ onAdd }) => {
                                     type="text"
                                     id="role"
                                     name="role"
-                                    className="border rounded-md px-4 py-2 w-full border-gray-300 bg-gray-100"
+                                    className="border rounded-md px-4 py-2 w-full border-gray-300 bg-gray-100 text-sm"
                                     value={newConductor.role} // Set fixed role value
                                     readOnly // Make the input read-only
                                 />
                             </div>
-                        </div>
-                        <div className="flex justify-center">
-                            <button type="submit" className="bg-blue-500 text-white rounded-md px-6 py-2 hover:bg-blue-600 transition duration-300">
-                                {editingConductorId ? 'Update Conductor' : 'Add Conductor'}
-                            </button>
+                       
+                            <div className="flex justify-center">
+                                
+  <button
+    type="submit"
+    className="bg-blue-800 text-white rounded-md px-6 py-2 hover:bg-blue-600 transition duration-300 w-44 h-10 text-sm mt-6"
+  >
+    {editingConductorId ? 'Update Conductor' : 'Add Conductor'}
+  </button>
+</div>
+
                         </div>
                     </form>
                 </div>
                 <div className="bg-gray-100 mx-auto px-8 rounded-lg shadow-md w-full h-1/2 mt-10">
                 <div className='mb-6'>
                     <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Conductors List</h2>
-                    <table className="min-w-full divide-y divide-gray-200w-full  ">
-                        <thead>
-                            <tr className="bg-gray-100">
-                                <th className="px-4 py-2 text-left text-sm font-medium text-gray-700 border border-gray-300">Username</th>
-                                <th className="px-4 py-2 text-left text-sm font-medium text-gray-700 border border-gray-300">Email</th>
-                                <th className="px-4 py-2 text-left text-sm font-medium text-gray-700 border border-gray-300">Address</th>
-                                <th className="px-4 py-2 text-left text-sm font-medium text-gray-700 border border-gray-300">Gender</th>
-                                <th className="px-4 py-2 text-left text-sm font-medium text-gray-700 border border-gray-300">Mobile Number</th>
-                                <th className="px-4 py-2 text-left text-sm font-medium text-gray-700 border border-gray-300">Role</th>
-                                <th className="px-4 py-2 text-left text-sm font-medium text-gray-700 border border-gray-300">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {conductors.map(conductor => (
-                                <tr key={conductor._id} className="hover:bg-gray-100">
-                                    <td className="px-4 py-2 border border-gray-300">{conductor.conductorname}</td>
-                                    <td className="px-4 py-2 border border-gray-300">{conductor.email}</td>
-                                    <td className="px-4 py-2 border border-gray-300">{conductor.address}</td>
-                                    <td className="px-4 py-2 border border-gray-300">{conductor.gender}</td>
-                                    <td className="px-4 py-2 border border-gray-300">{conductor.mobileNumber}</td>
-                                    <td className="px-4 py-2 border border-gray-300">{conductor.role}</td>
-                                    <td className="px-4 py-2 border border-gray-300">
-                                        <button
-                                            className="text-indigo-600 hover:text-indigo-900 mr-4"
-                                            onClick={() => handleEdit(conductor._id)}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            className="text-red-600 hover:text-red-900"
-                                            onClick={() => handleDelete(conductor.email)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <table className="min-w-full divide-y divide-gray-200">
+  <thead>
+    <tr className="bg-gray-100">
+      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
+      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
+      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
+      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mobile Number</th>
+      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+      <th className="px-7 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {conductors.map(conductor => (
+      <tr key={conductor._id} className="hover:bg-gray-100">
+        <td className="px-5 py-4 whitespace-nowrap text-sm">{conductor.conductorname}</td>
+        <td className="px-5 py-4 whitespace-nowrap text-sm">{conductor.email}</td>
+        <td className="px-5 py-4 whitespace-nowrap text-sm">{conductor.address}</td>
+        <td className="px-5 py-4 whitespace-nowrap text-sm">{conductor.gender}</td>
+        <td className="px-5 py-4 whitespace-nowrap text-sm">{conductor.mobileNumber}</td>
+        <td className="px-5 py-4 whitespace-nowrap text-sm">{conductor.role}</td>
+        <td className="px-7 py-4 whitespace-nowrap ">
+          <button
+            className="px-1 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+            onClick={() => handleEdit(conductor._id)}
+          >
+           <MdModeEdit />
+          </button>
+          <button
+            className=" px-1 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none"
+            onClick={() => handleDelete(conductor.email)}
+          >
+            <MdDelete />
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
                 </div>
                 </div>
             </div>

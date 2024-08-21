@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Feedback = require('../models/feedback');
-const Conductor = require('../models/conductor');
+//const Conductor = require('../models/conductor');
 
 // Route for submitting feedback
 router.post('/feedbackadd', async (req, res) => {
@@ -15,7 +15,7 @@ router.post('/feedbackadd', async (req, res) => {
       message
 }= req.body;
 
-    const newConductor= new Conductor({
+    const newFeedback= new Feedback({
       fName,
       lName,
       email,
@@ -23,8 +23,8 @@ router.post('/feedbackadd', async (req, res) => {
       message
     });
 
-    await newConductor.save();
-    res.status(201).json({ message: 'Bus added successfully' });
+    await newFeedback.save();
+    res.status(201).json({ message: 'Feedback submitted successfully' });
 } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
@@ -32,7 +32,7 @@ router.post('/feedbackadd', async (req, res) => {
 });
   
  /* try {
-    const feedback = new Feedback(req.body);
+    const newfeedback = new Feedback(req.body);
     await feedback.save();
     res.status(201).json({ success: true, message: 'Feedback submitted successfully' });
   } catch (error) {

@@ -9,6 +9,8 @@ import Location from '../Assests/location.jpg';
 import Water from '../Assests/waterbottle.jpg';
 import { motion } from 'framer-motion';
 import { AuthContext } from '../Components/context/AuthContext';
+//import SLbus from '../Assests/SLbus.jpg';
+//import SLbus1 from '../Assests/slbus2.jpg';
 
 Modal.setAppElement('#root');
 
@@ -20,7 +22,8 @@ const Booking = () => {
   const [searchCriteria, setSearchCriteria] = useState({
     turnTime: '',
     departureLocation: '',
-    arrivalLocation: ''
+    arrivalLocation: '',
+    date: ''
   });
   const [searchResults, setSearchResults] = useState([]);
   const [selectedBus, setSelectedBus] = useState(null); 
@@ -42,11 +45,7 @@ const Booking = () => {
       const response = await axios.put(`http://localhost:8070/api/bookings/cancel-request/${bookingId}`);
       setResponseMessage(response.data.message);
     } catch (error) {
-      if (error.response) {
-        setResponseMessage(error.response.data.message);
-      } else {
-        setResponseMessage('An error occurred while cancelling the booking.');
-      }
+      setResponseMessage(error.response ? error.response.data.message : 'An error occurred while cancelling the booking.');
     }
   };
 
@@ -69,9 +68,7 @@ const Booking = () => {
   const handleSubmitt = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get('http://localhost:8070/api/buses', {
-        params: searchCriteria
-      });
+      const response = await axios.get('http://localhost:8070/api/buses', { params: searchCriteria });
       setSearchResults(response.data);
     } catch (error) {
       console.error('Error:', error);
@@ -88,12 +85,8 @@ const Booking = () => {
     const { date, turnTime, busId } = seatBooking;
 
     try {
-      const response = await axios.get(`http://localhost:8070/api/availability`,{
-        params: {
-          date,
-          turnTime,
-          busId
-        }
+      const response = await axios.get(`http://localhost:8070/api/availability`, {
+        params: { date, turnTime, busId }
       });
       const availableSeats = response.data;
       console.log("Available Seats:", availableSeats);
@@ -110,21 +103,27 @@ const Booking = () => {
 
   const handleBookNow = async (bus) => {
     navigate('/seatbooking', { state: { bus } });
-  }
+  };
 
-  const handleCancelBooking = (busId) => {
-    setBookingId(busId);
+  const handleCancelBooking = () => {
     openCancelModal();
-  }
+  };
 
   const handleUnregisterUser = () => {
     alert('Please log in or register to book a seat.');
-    navigate('/login')
-  }
+    navigate('/login');
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen p-8">
-      <button className='item-end text-sm text-blue-600 hover:text-blue-300 text-bold' onClick={handleCancelBooking}>cancelbooking</button>
+      <button
+        className="text-sm text-blue-600 hover:text-blue-300 font-bold mb-4"
+        onClick={handleCancelBooking}
+      >
+        Cancel Booking
+      </button>
+      
+      {/* Cancel Booking Modal */}
       <Modal
         isOpen={cancelModalIsOpen}
         onRequestClose={closeCancelModal}
@@ -132,8 +131,8 @@ const Booking = () => {
         className="p-8 rounded-lg shadow-lg w-1/2 mx-auto mt-16 bg-orange-50"
         overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
       >
-        <h2 className="text-2xl font-bold mb-4 justify-center items-center">Cancel Booking</h2>
-        <p className='text-gray-700 text-sm'>Cancel your booking before 2 days...</p>
+        <h2 className="text-2xl font-bold mb-4">Cancel Booking</h2>
+        <p className='text-gray-700 text-sm mb-4'>Cancel your booking before 2 days...</p>
         <form onSubmit={handleSubmit}>
           <label htmlFor="bookingId" className="block text-lg mb-2">Booking ID:</label>
           <input
@@ -150,6 +149,7 @@ const Booking = () => {
         <button onClick={closeCancelModal} className="mt-4 text-gray-500 hover:text-gray-700 transition duration-300">Close</button>
       </Modal>
 
+      {/* Search Buses */}
       <motion.h2 className="text-3xl font-bold mb-6 text-center">Search Buses</motion.h2>
 
       <form onSubmit={handleSubmitt} className="max-w-4xl mx-auto mb-8">
@@ -178,6 +178,18 @@ const Booking = () => {
             />
           </div>
 
+          <div className="flex-1">
+            <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date:</label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              value={searchCriteria.date}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+
           <motion.button
             type="submit"
             className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700 transition duration-300"
@@ -187,80 +199,85 @@ const Booking = () => {
         </div>
       </form>
 
-      <div>
-        <motion.h3 className="text-2xl font-bold mb-4 text-center">XPress Bookings</motion.h3>
-        <motion.p className="text-lg mb-8 text-center">
-          Book your seat now!
-          <p className='text-sm text-gray-700'>Book Your Seat Even a Day in Advance</p>
-        </motion.p>
+      {/* Search Results */}
+      <motion.h3 className="text-2xl font-bold mb-4 text-center">XPress Bookings</motion.h3>
+      <motion.p className="text-lg mb-8 text-center">
+        Book your seat now!<br />
+        <span className='text-sm text-gray-700'>Book Your Seat Even a Day in Advance</span>
+      </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {searchResults.map((bus) => (
-            <motion.div
-              key={bus._id}
-              className="bg-white p-6 rounded-lg shadow-lg border border-gray-200"
-            >
-              <div className="flex flex-col justify-between space-y-4">
-                <div className="flex justify-between items-center">
-                  <div className="flex flex-col">
-                    <p className="text-lg font-medium text-gray-900">{bus.departureLocation}</p>
-                    <p className="text-lg text-gray-500">{bus.arrivalLocation}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-md text-gray-500">Departure-Arrival:</p>
-                    <p className="text-md text-gray-500">{bus.departureTime} - {bus.arrivalTime}</p>
-                  </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {searchResults.map((bus) => (
+          <motion.div
+            key={bus._id}
+            className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 flex flex-col md:flex-row gap-6"
+          >
+            <div className="flex-shrink-0">
+              <img src={bus.image || 'default-image-url.jpg'} alt="Bus" className="w-full h-40 object-cover rounded-md" />
+            </div>
+            <div className="flex-1">
+              <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+                <div className="flex flex-col">
+                  <p className="text-lg font-medium text-gray-900">{bus.departureLocation}</p>
+                  <p className="text-lg text-gray-500">{bus.arrivalLocation}</p>
                 </div>
-                <div className="flex justify-between items-center">
-                  <div className="text-left">
-                    <p className="text-md text-gray-500">Price:</p>
-                    <p className="text-md text-gray-900 font-semibold">Rs. {bus.price}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-md text-gray-500">Available Seats:</p>
-                    <p className="text-md text-gray-900 font-semibold">{bus.availableSeats}</p>
-                  </div>
+                <div className="text-right">
+                  <p className="text-md text-gray-500">Departure-Arrival:</p>
+                  <p className="text-md text-gray-500">{bus.departureTime} - {bus.arrivalTime}</p>
                 </div>
-                <div className="flex justify-between items-center">
-                  <div className="text-left">
-                    <p className="text-md text-gray-500">Turn Time:</p>
-                    <p className="text-md text-gray-900 font-semibold">{bus.turnTime}</p>
-                  </div>
-                  <div className="flex space-x-2">
-                    <img src={Wifi} alt="WiFi" className="w-6 h-6" />
-                    <img src={Ac} alt="AC" className="w-6 h-6" />
-                    <img src={Seat} alt="Seat" className="w-6 h-6" />
-                    <img src={Water} alt="Water" className="w-6 h-6" />
-                    <img src={Location} alt="Location" className="w-6 h-6" />
-                  </div>
+              </div>
+              <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+                <div className="text-left">
+                  <p className="text-md text-gray-500">Price:</p>
+                  <p className="text-md text-gray-900 font-semibold">Rs. {bus.price}</p>
                 </div>
+                <div className="text-right">
+                  <p className="text-md text-gray-500">Available Seats:</p>
+                  <p className="text-md text-gray-900 font-semibold">{bus.availableSeats}</p>
+                </div>
+              </div>
+              <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+                <div className="text-left">
+                  <p className="text-md text-gray-500">Turn Time:</p>
+                  <p className="text-md text-gray-900 font-semibold">{bus.turnTime}</p>
+                </div>
+                <div className="flex space-x-2">
+                  <img src={Wifi} alt="WiFi" className="w-6 h-6" />
+                  <img src={Ac} alt="AC" className="w-6 h-6" />
+                  <img src={Seat} alt="Seat" className="w-6 h-6" />
+                  <img src={Water} alt="Water" className="w-6 h-6" />
+                  <img src={Location} alt="Location" className="w-6 h-6" />
+                </div>
+              </div>
+              <div className="flex justify-between">
                 <motion.button
                   onClick={() => handleViewSeat(bus)}
-                  className="mt-4 bg-green-300 text-white px-4 py-2 rounded-md shadow hover:bg-green-200 transition duration-300"
+                  className="bg-green-300 text-white px-4 py-2 rounded-md shadow hover:bg-green-200 transition duration-300"
                 >
                   CHECK AVAILABILITY
                 </motion.button>
-
                 {user ? (
                   <motion.button
                     onClick={() => handleBookNow(bus)}
-                    className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md shadow hover:bg-green-600 transition duration-300"
+                    className="bg-green-500 text-white px-4 py-2 rounded-md shadow hover:bg-green-600 transition duration-300"
                   >
                     BOOK NOW
                   </motion.button>
                 ) : (
                   <motion.button
                     onClick={handleUnregisterUser}
-                    className="mt-4 bg-yellow-500 text-white px-4 py-2 rounded-md shadow hover:bg-yellow-600 transition duration-300"
+                    className="bg-yellow-500 text-white px-4 py-2 rounded-md shadow hover:bg-yellow-600 transition duration-300"
                   >
                     BOOK NOW
                   </motion.button>
                 )}
               </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
+
+      {/* Available Seats Modal */}
       <Modal
         isOpen={seatModalIsOpen}
         onRequestClose={closeSeatModal}

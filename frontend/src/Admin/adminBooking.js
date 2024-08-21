@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { FaBusAlt } from "react-icons/fa";
 //import CheckSeatAvailability from './checkSeatAvailability';
 
 const AdminBooking = () => {
@@ -66,10 +67,15 @@ const AdminBooking = () => {
   };*/
 
   return (
-    <div className='bg-gray-200 '>
-      <h2 className="text-2xl font-semibold mb-4 mt-14 ml-14">Pending Bookings</h2>
+    <div className='bg-gray-50 '>
+      <div className="flex items-center space-x-4 mb-6">
+        <FaBusAlt  className="text-4xl text-blue-900 ml-12 mt-16" />
+        <h2 className="text-3xl font-semibold text-blue-900 mt-16">Pending Bookings</h2>
+      </div>
+                    <div className="border-b-8 border-blue-900 mb-6"></div>
+                    
       {pendingBookings.length > 0 ? (
-      <table className="min-w-screen divide-y divide-gray-200 ml-7 mr-7 mt-20">
+      <table className="min-w-screen divide-y divide-white ml-12 mr-7 mt-20">
         <thead className="bg-gray-500">
             <tr>
               <th scope="col" className="px-16 py-4 text-left text-xs font-medium text-black uppercase tracking-wider">Passenger Name</th>

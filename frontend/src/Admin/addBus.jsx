@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { MdModeEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+import { FaBusAlt } from "react-icons/fa";
 
 const AddBus = () => {
     const [formData, setFormData] = useState({
@@ -121,6 +124,12 @@ const AddBus = () => {
     return (
         <div className='pt-[50px] bg-[#F8F9FC]'>
         <div className='ml-0 mr-2 w-full'>
+        <div className="flex items-center space-x-4 mb-6">
+        <FaBusAlt  className="text-4xl text-blue-900 ml-12 mt-16" />
+        <h2 className="text-3xl font-semibold text-blue-900 mt-16">Bus</h2>
+      </div>
+                    <div className="border-b-8 border-blue-900 mb-6"></div>
+                    
             <div className="bg-gray-100 mx-auto px-8 rounded-lg shadow-md w-100% h-1/2 mt-10">
                 <div className='ml-8'> 
                     <h2 className="text-2xl font-bold mb-4">{editFormData ? 'Edit Bus' : 'Add New Bus'}</h2>
@@ -303,29 +312,29 @@ const AddBus = () => {
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {searchResults.map((bus) => (
                                     <tr key={bus._id}>
-                                        <td className="px-4 py-3 whitespace-nowrap">{bus.departureLocation}</td>
-                                        <td className="px-4 py-3 whitespace-nowrap">{bus.arrivalLocation}</td>
-                                        <td className="px-4 py-3 whitespace-nowrap">{bus.departureTime}</td>
-                                        <td className="px-4 py-3 whitespace-nowrap">{bus.arrivalTime}</td>
-                                        <td className="px-4 py-3 whitespace-nowrap">{bus.turnTime}</td>
-                                        <td className="px-4 py-3 whitespace-nowrap">{bus.duration}</td>
-                                        <td className="px-4 py-3 whitespace-nowrap">{bus.price}</td>
-                                        <td className="px-4 py-3 whitespace-nowrap">{bus.availableSeats}</td>
-                                        <td className="px-4 py-3 whitespace-nowrap">
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm">{bus.departureLocation}</td>
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm">{bus.arrivalLocation}</td>
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm">{bus.departureTime}</td>
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm">{bus.arrivalTime}</td>
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm">{bus.turnTime}</td>
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm">{bus.duration}</td>
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm">{bus.price}</td>
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm">{bus.availableSeats}</td>
+                                        <td className="px-4 py-3 whitespace-nowrap text-sm">
                                             {bus.conductor ? bus.conductor.conductorname : 'N/A'}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <button
-                                                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none mr-2"
+                                                className="px-1 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none mr-2"
                                                 onClick={() => handleEdit(bus)}
                                             >
-                                                Edit
+                                                <MdModeEdit />
                                             </button>
                                             <button
-                                                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none"
+                                                className="px-1 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none"
                                                 onClick={() => handleDelete(bus._id)}
                                             >
-                                                Delete
+                                                <MdDelete/>
                                             </button>
                                         </td>
                                     </tr>

@@ -181,7 +181,7 @@ const SignUp = () => {
           </div>
           <div>
             <lable>confirm password</lable>
-            <input type='password' name='confirmpw' placeholder='confirm Password'/>
+            <input type='password' name='confirmpw' placeholder='confirm Password' className={`border rounded-md px-4 py-2 w-full ${errors.password ? 'border-red-500' : 'border-gray-300'}`}/>
           </div>
           <div className="flex justify-end">
             <button type="submit" className="bg-gray-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 transition duration-300 w-56 h-12 mt-6">

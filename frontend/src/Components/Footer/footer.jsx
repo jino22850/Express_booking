@@ -25,14 +25,14 @@ const footer = () => {
 </div>*/}
           <div className='space-y-6 ml-16 mr-11'>
             <h1 className='text-2xl py-3 font-bold uppercase border-b-8 text-black'>About</h1>
-            <p className='text-black justify-center items-center'>XPress Bookings envisions a future where bus travel in Sri Lanka is seamless, convenient, and accessible for everyone. </p>{/*<p>We strive to be the leading online platform for booking bus tickets, offering a user-friendly experience and a comprehensive network of routes.</p>*/}
+            <p className='text-black justify-center items-center text-justify text-sm'>XPress Bookings envisions a future where bus travel in Sri Lanka is seamless, convenient, and accessible for everyone. </p>{/*<p>We strive to be the leading online platform for booking bus tickets, offering a user-friendly experience and a comprehensive network of routes.</p>*/}
 
 
             
           </div>
-          <div className='space-y-6 ml-20 mr-11'>
+          <div className='space-y-6 ml-10 mr-11 justify-center'>
   <h1 className='text-2xl py-3 font-bold uppercase border-b-8 text-black justify-center '>Company</h1>
-  <div className='space-y-2 justify-center items-center ml-16'>
+  <div className='space-y-2 justify-center items-center ml-16 text-justify text-sm'>
     <a href='/home' className='block text-black hover:text-indigo-500 transition duration-300'>Home</a>
     <a href='/about' className='block text-black hover:text-indigo-500 transition duration-300'>About</a>
     <a href='/contact' className='block text-black hover:text-indigo-500 transition duration-300'>Contact</a>
@@ -43,14 +43,14 @@ const footer = () => {
           <div>
           <div className='space-y-6 ml-11 mr-11 '>
           <h1 className='text-2xl py-3 font-bold uppercase border-b-8 text-black'>Contact</h1>
-          <div className='flex items-center gap-4 text-center text-black'>
+          <div className='flex items-center gap-4 text-center text-black text-sm'>
             <FaAddressBook/>XPress booking , Judge's hill road , Badulla
           </div>
-          <div className='flex items-center gap-4 text-center text-black'>
+          <div className='flex items-center gap-4 text-center text-black text-sm '>
             <PiPhoneCallFill/><a href='/phone'>055-2586652</a>
           </div>
-          <div className='flex items-center gap-4 text-center text-black'>
-            <MdAttachEmail/><a href='/email' className='hover:to-blue-200'>xpressbooking@gmail.com</a>
+          <div className='flex items-center gap-4 text-center text-black text-sm'>
+            <MdAttachEmail/><a href='/email'>xpressbooking@gmail.com</a>
           </div>
 
           </div>

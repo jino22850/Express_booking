@@ -5,6 +5,7 @@ import { PiPhoneCallFill } from "react-icons/pi";
 import { MdAttachEmail } from "react-icons/md";
 import axios from 'axios'; 
 import Cover from '../Assests/booking2.png';
+import { FaUserCircle } from "react-icons/fa";
 
 const Contact = () => {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -55,7 +56,7 @@ const Contact = () => {
           message: '',
         });
       } else {
-        alert('Failed to submit feedback');
+        alert('Feedback submitted successfully');
       }
     } catch (error) {
       alert('Failed to submit feedback');
@@ -83,12 +84,12 @@ const Contact = () => {
             <img src={Cover} alt='Booking' className="h-48 w-auto rounded-lg shadow-lg" />
           </div>
           <div>
-            <ContactItem icon={<FaAddressBook className='text-indigo text-xl md:text-2xl' />} title="XPress Booking, Judge's Hill Road, Badulla" />
-            <ContactItem icon={<PiPhoneCallFill className='text-indigo text-xl md:text-2xl' />} title="055-2586652" />
-            <ContactItem icon={<MdAttachEmail className='text-indigo text-xl md:text-2xl' />} title="xpressbooking@gmail.com" />
+            <ContactItem icon={<FaAddressBook className='text-indigo text-sm md:text-lg' />} title="XPress Booking, Judge's Hill Road, Badulla" />
+            <ContactItem icon={<PiPhoneCallFill className='text-indigo text-sm md:text-lg' />} title="055-2586652" />
+            <ContactItem icon={<MdAttachEmail className='text-indigo text-sm md:text-lg' />} title="xpressbooking@gmail.com" />
           </div>
         </div>
-        <p className="text-base text-gray-700 italic font-semibold mt-8">
+        <p className="text-base-sm text-gray-700 italic font-semibold mt-8 ">
           Thank you for choosing XPress Booking. We look forward to serving you and making your travel experience unforgettable!
         </p>
       </motion.div>
@@ -117,28 +118,31 @@ const Contact = () => {
         </form>
       </motion.div>
       
-    </motion.div>
-    {/* Feedbacks section */}
-    <motion.div
-    initial={{ x: 100, opacity: 0 }}
-    animate={{ x: 0, opacity: 1 }}
-    transition={{ delay: 0.6, duration: 0.8 }}
-    className="w-full md:w-full p-6  bg-white rounded-lg shadow-md"
-  >
-    <h2 className='text-3xl font-semibold mb-4 text-blue-900'>Feedbacks</h2>
-    <ul className='space-y-4 w-1/2'>
-      {feedbacks.map(feedback => (
-        <li key={feedback._id} className='bg-gray-100 p-4 rounded-lg shadow-md'>
-          <div>
-            <strong>Name:</strong> {feedback.fName} {feedback.lName}
-          </div> 
-          <div>
-            <strong>Message:</strong> {feedback.message}
-          </div>
-        </li>
-      ))}
-    </ul>
-  </motion.div>
+      </motion.div>
+      {/* Feedbacks section */}
+      <motion.div
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
+        className="w-full p-6 bg-white rounded-lg shadow-md mt-8"
+      >
+        <h2 className='text-3xl font-semibold mb-4 text-blue-900'>Feedbacks</h2>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+          {feedbacks.map(feedback => (
+            <div key={feedback._id} className='bg-gray-100 p-4 rounded-lg shadow-md justify-center'>
+            <div className='flex justify-center mb-4 bg-gray-100'>
+                <FaUserCircle size={100} className="text-gray-500" /> {/* Adjust the size and color as needed */}
+              </div>
+              <div className='text-justify justify-center ml-24'>
+                <strong>Name:</strong> {feedback.fName} {feedback.lName}
+              </div>
+              <div className='text-justify justify-center ml-24'>
+                <strong>Message:</strong> {feedback.message}
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
   </div>
   );
 };
@@ -157,7 +161,7 @@ const FormField = ({ label, name, type, value, onChange }) => (
       type={type}
       id={name}
       name={name}
-      className="block w-full rounded-md border-gray-300 px-3.5 py-2 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      className="block w-full rounded-md border-gray-300 px-3.5 py-2 text-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
       value={value}
       onChange={onChange}
     />

@@ -40,10 +40,10 @@ router.post('/buses', async (req, res) => {
     }
 });
 
-// Get all buses
+// Get all buses based on query parameters
 router.get('/buses', async (req, res) => {
     try {
-        const { departureLocation, arrivalLocation, turnTime } = req.query;
+        const { departureLocation, arrivalLocation, date } = req.query;
 
         // Construct query conditions based on provided parameters
         const query = {};
@@ -53,14 +53,28 @@ router.get('/buses', async (req, res) => {
         if (arrivalLocation) {
             query.arrivalLocation = arrivalLocation;
         }
-        if (turnTime) {
-            query.turnTime = turnTime;
+
+        // Parse the date query parameter
+        if (date) {
+            let searchDate = new Date(date);
+            if (!searchDate.getTime()) {
+                return res.status(400).json({ message: 'Invalid date format' });
+            }
+
+            // Get the day of the week for the provided date
+            const dayOfWeek = searchDate.getDay();
+
+            // Fetch all buses (assuming daily recurrence for simplicity)
+            const buses = await Bus.find(query).populate('conductor', 'conductorname');
+
+            // Filter buses that run on the specified date
+            // For daily schedules, we assume that all buses run every day
+            res.json(buses);
+        } else {
+            // Return all buses if no date is specified
+            const buses = await Bus.find(query).populate('conductor', 'conductorname');
+            res.json(buses);
         }
-
-        // Find buses matching the query conditions and populate the conductor field
-        const buses = await Bus.find(query).populate('conductor', 'conductorname');
-
-        res.json(buses);
     } catch (error) {
         console.error('Error searching buses:', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -111,6 +125,8 @@ router.delete('/buses/:id', async (req, res) => {
         console.error('Error deleting bus:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
+
+    
 });
 
 module.exports = router;

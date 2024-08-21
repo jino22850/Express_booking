@@ -1,87 +1,74 @@
-import React from 'react';
-//import { MdDashboard } from "react-icons/md";
-import { FaDashcube } from "react-icons/fa";
-import { MdAccountBox } from "react-icons/md";
+import React, { useState } from 'react';
+import { FaDashcube, FaUser, FaChevronLeft } from "react-icons/fa";
+import { MdAccountBox, MdFeedback } from "react-icons/md";
 import { FaBusSimple } from "react-icons/fa6";
-import { MdFeedback } from "react-icons/md";
-//import { BiSolidReport } from "react-icons/bi";
-import { FaUser } from "react-icons/fa";
-import { FaChevronLeft } from "react-icons/fa";
 
 const SideBar = ({ openSidebarToggle, OpenSidebar }) => {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
+  const toggleBookingDropdown = () => {
+    setIsBookingOpen(!isBookingOpen);
+  };
+
   return (
-    <div className='fixed top-0 left-0 h-full bg-yellow-200 dark:bg-slate-950/90 mt-16'>
+    <div className='fixed top-0 left-0 h-full bg-gray-200 dark:bg-slate-950/90 mt-16'>
       <div className='flex flex-col gap-3 w-52 text-slate-300 h-full justify-between'>
         <div className='flex flex-col gap-10 px-4 mt-4'>
           <div className='flex items-center justify-center gap-5'>
-            {/*<div className='text-black dark:text-white text-xl'>
-              <MdDashboard />
-            </div>
-  <div className='md:flex text-black leading-[24px] font-extrabold cursor-pointer'>XPress Bookings</div>*/}
+            {/* Placeholder for potential logo or branding */}
           </div>
-          <div className='flex flex-col gap-5 text-md lg:text-lg'>
+          <div className='flex flex-col gap-5 text-md lg:text-md'>
             <div className='flex items-center gap-5 text-black'>
-              <div>
-                <FaDashcube />
-              </div>
-              <div className='sm:flex hover:text-lg lg:text-black cursor-pointer'>
-                <a href='/admin/dashboard' className="hover:underline">Dashboard</a>
+              <FaDashcube />
+              <div className='sm:flex hover:text-bold lg:text-black cursor-pointer'>
+                <a href='/admin/dashboard' className="hover:underline text-sm">Dashboard</a>
               </div>
             </div>
             <div className='flex items-center gap-5 text-black'>
-              <div>
-                <MdAccountBox />
-              </div>
-              <div className='sm:flex hover:text-lg lg:text-black cursor-pointer'>
-                <a href='/admin/addUser' className="hover:underline">Accounts</a>
+              <MdAccountBox />
+              <div className='sm:flex hover:text-bold lg:text-black cursor-pointer'>
+                <a href='/admin/addUser' className="hover:underline text-sm">Accounts</a>
               </div>
             </div>
             <div className='flex items-center gap-5 text-black'>
-              <div>
-                <FaUser />
-              </div>
-              <div className='sm:flex hover:text-lg lg:text-black cursor-pointer'>
-                <a href='/admin/conductor' className="hover:underline">Conductor</a>
+              <FaUser />
+              <div className='sm:flex hover:text-bold lg:text-black cursor-pointer'>
+                <a href='/admin/conductor' className="hover:underline text-sm">Conductor</a>
               </div>
             </div>
-            <div className='flex items-center gap-5 text-black'>
-              <div className='mt-1'>
-                <FaBusSimple />
+            <div className='flex flex-col gap-1'>
+              <div className='flex items-center gap-5 text-black cursor-pointer' onClick={toggleBookingDropdown}>
+                <FaBusSimple className='mt-1' />
+                <span className='hover:text-underline text-sm'>Booking</span>
+              </div>
+              {isBookingOpen && (
+                <div className='pl-10 flex flex-col'>
+                  <a href='/admin/adminBooking' className=" text-black hover:underline text-sm">Pending Booking</a>
+                  <a href='/admin/approvedBookings' className=" text-black hover:underline text-sm">Approved Booking</a>
+                  <a href='/admin/CancelBooking' className=" text-black hover:underline text-sm">Cancel Booking</a>
                 </div>
-              
-              <div className='sm:flex flex-col gap-1'>
-              <span className='text-lg text-black hover:text-yellow-500 cursor-pointer'>Booking</span>
-             
-                <a href='/admin/adminBooking' className="hover:underline text-sm">Pending Booking</a>
-                <a href='/admin/approvedBookings' className="hover:underline text-sm">Approved Booking</a>
-                <a href='/admin/CancelBooking' className="hover:underline text-sm">Cancel Booking</a>
-              </div>
+              )}
             </div>
-            
             <div className='flex items-center gap-5 text-black'>
-              <div>
-                <MdFeedback />
-              </div>
-              <div className='sm:flex hover:text-lg lg:text-black cursor-pointer'>
-                <a href='/admin/feedback' className="hover:underline">Feedback</a>
+              <MdFeedback />
+              <div className='sm:flex hover:text-bold lg:text-black cursor-pointer'>
+                <a href='/admin/feedback' className="hover:underline text-sm">Feedback</a>
               </div>
             </div>
             <div className='flex items-center gap-5 text-black'>
-              <div>
-                <FaBusSimple />
-              </div>
-              <div className='sm:flex hover:text-lg lg:text-black cursor-pointer'>
-                <a href='/admin/addBus' className="hover:underline">Bus</a>
+              <FaBusSimple />
+              <div className='sm:flex hover:text-bold lg:text-black cursor-pointer'>
+                <a href='/admin/addBus' className="hover:underline text-sm">Bus</a>
               </div>
             </div>
-            {/*<div className='flex items-center gap-5 text-black'>
-              <div>
-                <BiSolidReport />
-              </div>
-              <div className='sm:flex hover:text-lg lg:text-black cursor-pointer text-black leading-[20px]'>
+            {/* Uncomment this section if needed
+            <div className='flex items-center gap-5 text-black'>
+              <BiSolidReport />
+              <div className='sm:flex hover:text-lg lg:text-black cursor-pointer'>
                 <a href='/admin/report' className="hover:underline">Report</a>
               </div>
-</div>*/}
+            </div>
+            */}
           </div>
         </div>
         <div className='flex items-center justify-center pt-4'>

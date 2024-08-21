@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { FaBusAlt } from "react-icons/fa";
 
 const ApprovedBookings = () => {
   const [approvedBookings, setApprovedBookings] = useState([]);
@@ -89,12 +90,13 @@ const ApprovedBookings = () => {
   return (
     <div className='pt-[50px] bg-[#fbfbfb]'>
       
-      <PDFDownloadLink  className='mt-5 ml-10 text-sm place-items-end mr-4'  document={<PDFReport />} fileName="approved_bookings_report.pdf">
-        {({ blob, url, loading, error }) => (
-          loading ? 'Generating PDF...' : 'Download Report'
-        )}
-      </PDFDownloadLink>
-      <h2 className="text-2xl font-bold mb-4 ml-10 mt-10">Approved Bookings</h2>
+      
+      <div className="flex items-center space-x-4 mb-6">
+        <FaBusAlt  className="text-4xl text-blue-900 ml-12 mt-16" />
+        <h2 className="text-3xl font-semibold text-blue-900 mt-16">Approved Bookings</h2></div>
+    
+                    <div className="border-b-8 border-blue-900 mb-6"></div>
+                    
       
       <div className='ml-0 mr-2 min-w-screen'>
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mb-8">
@@ -126,6 +128,12 @@ const ApprovedBookings = () => {
               Search
             </button>
           </div>
+          <br/><br/>
+          <PDFDownloadLink  className='bg-blue-500 text-white text-sm rounded-md px-6 py-2 hover:bg-blue-600 transition duration-300'  document={<PDFReport />} fileName="approved_bookings_report.pdf">
+        {({ blob, url, loading, error }) => (
+          loading ? 'Generating PDF...' : 'Download Report'
+        )}
+      </PDFDownloadLink>
         </form>
         <div className="bg-gray-100 mx-auto px-8 py-6 rounded-lg shadow-md w-full  items-center">
           <div className="overflow-x-auto">

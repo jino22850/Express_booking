@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FcFeedback } from "react-icons/fc";
 
 const Feedback = () => {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -30,31 +31,35 @@ const Feedback = () => {
   };
 
   return (
-    <div className='bg-gray-200'>
-      <h2 className="text-2xl font-semibold mb-4 mt-14 ml-14">Feedbacks</h2>
-    
-      <table className="min-w-screen divide-y divide-gray-200 ml-7 mr-7 mt-20">
+    <div className='bg-white'>
+      <div className="flex items-center space-x-4 mb-6">
+        <FcFeedback className="text-4xl text-blue-900 ml-12 mt-20" />
+        <h2 className="text-3xl font-semibold text-blue-900 mt-20">Feedbacks</h2>
+      </div>
+      <div className="border-b-8 border-blue-900 mb-6"></div>
+                    
+      <table className="min-w-screen divide-y divide-gray-200 ml-14 mr-7 mt-20">
         <thead className="bg-gray-500">
           <tr>
-            <th className="px-10 py-5 text-left text-xs font-medium text-black uppercase tracking-wider">First Name</th>
-            <th className="px-10 py-5 text-left text-xs font-medium text-black uppercase tracking-wider">Last Name</th>
-            <th className="px-10 py-5 text-left text-xs font-medium text-black uppercase tracking-wider">Email</th>
-            <th className="px-10 py-5 text-left text-xs font-medium text-black uppercase tracking-wider">Phone</th>
-            <th className="px-10 py-5 text-left text-xs font-medium text-black uppercase tracking-wider">Message</th>
-            <th className="px-10 py-5 text-left text-xs font-medium text-black uppercase tracking-wider">Status</th>
-            <th className="px-10 py-5 text-left text-xs font-medium text-black uppercase tracking-wider">Action</th>
+            <th className="px-8 py-4 text-left text-xs font-medium text-black uppercase tracking-wider">First Name</th>
+            <th className="px-8 py-4 text-left text-xs font-medium text-black uppercase tracking-wider">Last Name</th>
+            <th className="px-8 py-4 text-left text-xs font-medium text-black uppercase tracking-wider">Email</th>
+            <th className="px-8 py-4 text-left text-xs font-medium text-black uppercase tracking-wider">Phone</th>
+            <th className="px-8 py-4 text-left text-xs font-medium text-black uppercase tracking-wider">Message</th>
+            <th className="px-8 py-4 text-left text-xs font-medium text-black uppercase tracking-wider">Status</th>
+            <th className="px-8 py-4 text-left text-xs font-medium text-black uppercase tracking-wider">Action</th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {feedbacks.map(feedback => (
             <tr key={feedback._id}>
-              <td className="px-8 py-4 whitespace-nowrap">{feedback.fName}</td>
-              <td className="px-8 py-4 whitespace-nowrap">{feedback.lName}</td>
-              <td className="px-8 py-4 whitespace-nowrap">{feedback.email}</td>
-              <td className="px-8 py-4 whitespace-nowrap">{feedback.phone}</td>
-              <td className="px-8 py-4 whitespace-nowrap">{feedback.message}</td>
-              <td className="px-8 py-4 whitespace-nowrap">{feedback.approved ? 'Approved' : 'Pending'}</td>
-              <td className="px-8 py-4 whitespace-nowrap">
+              <td className="px-8 py-4 whitespace-nowrap text-sm">{feedback.fName}</td>
+              <td className="px-8 py-4 whitespace-nowrap text-sm">{feedback.lName}</td>
+              <td className="px-8 py-4 whitespace-nowrap text-sm">{feedback.email}</td>
+              <td className="px-8 py-4 whitespace-nowrap text-sm">{feedback.phone}</td>
+              <td className="px-8 py-4 whitespace-nowrap text-sm">{feedback.message}</td>
+              <td className="px-8 py-4 whitespace-nowrap text-sm">{feedback.approved ? 'Approved' : 'Pending'}</td>
+              <td className="px-8 py-4 whitespace-nowrap text-sm">
                 {!feedback.approved && (
                   <button
                     className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none mr-2"

@@ -36,8 +36,13 @@ availableSeats: {
 },
 conductor: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'conductor' // Reference to the Conductor model
-}
+    ref: 'Conductor' // Reference to the Conductor model
+},
+recurrence: { 
+    type: String, 
+    default: 'daily' 
+} // Could be 'daily', 'weekly', etc.
+
 });
 
 module.exports = mongoose.model('Bus', busSchema);
